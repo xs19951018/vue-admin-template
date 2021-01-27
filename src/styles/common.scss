@@ -1,0 +1,55 @@
+/** AppMain */
+.app-main {
+    background-color: rgb(240, 242, 245);
+}
+
+/** table */
+.search-container {
+    background-color: #ffffff;
+    padding: 14px 20px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-family: PingFangSC, Microsoft YaHei;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.65);
+}
+.search-container span:nth-child(1) {
+    padding: 0 10px 0 0;
+}
+.search-container span {
+    padding: 0 10px;
+}
+.search-container .el-input,.el-select {
+    width: 130px;
+}
+.search-container .tools{
+    margin-top: 10px;
+}
+.search-container .tool-search {
+    float: right;
+    margin-right: 10px;
+}
+
+/** form */
+.from-container {
+    background-color: #ffffff;
+}
+.from-container form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 30px 0px;
+}
+.from-container form .el-input,.el-select {
+    width: 230px;
+}
+.from-container .tools {
+    padding-left: 110px;
+}
+.from-container .tools .el-button {
+    margin: 0 20px;
+}
+.from-container .el-form-item__label {
+    font-family: PingFangSC, Microsoft YaHei;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.65);
+}

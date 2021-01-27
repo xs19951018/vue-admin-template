@@ -159,6 +159,67 @@ export const constantRoutes = [
       }
     ]
   },
+  {
+    path: '/manage',
+    component: Layout,
+    redirect: '/manage/userTable',
+    name: 'manage',
+    meta: { title: '系统管理', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'userTable',
+        name: 'userTable',
+        component: () => import('@/views/backEnd/manage/user/index'),
+        meta: { title: '用户列表', icon: 'table' }
+      },
+      {
+        path: 'userTable/addUser',
+        name: 'addUser',
+        hidden: true,
+        component: () => import('@/views/backEnd/manage/user/addUser'),
+        meta: { title: '新增用户' }
+      },
+      {
+        path: 'roleTable',
+        name: 'roleTable',
+        component: () => import('@/views/backEnd/manage/role/index'),
+        meta: { title: '角色列表', icon: 'table' }
+      },
+      {
+        path: 'roleTable/addRole',
+        name: 'addRole',
+        hidden: true,
+        component: () => import('@/views/backEnd/manage/role/addRole'),
+        meta: { title: '新增角色' }
+      },
+      {
+        path: 'menuTable',
+        name: 'menuTable',
+        component: () => import('@/views/backEnd/manage/menu/index'),
+        meta: { title: '菜单列表', icon: 'table' }
+      },
+      {
+        path: 'menuTable/addMenu',
+        name: 'addMenu',
+        hidden: true,
+        component: () => import('@/views/backEnd/manage/menu/addMenu'),
+        meta: { title: '新增菜单' }
+      },
+      {
+        path: 'resourceTable',
+        name: 'resourceTable',
+        component: () => import('@/views/backEnd/manage/resource/index'),
+        meta: { title: '资源列表', icon: 'table' }
+      },
+      {
+        path: 'resourceTable/addResource',
+        name: 'addResource',
+        hidden: true,
+        component: () => import('@/views/backEnd/manage/resource/addResource'),
+        meta: { title: '新增资源' }
+      }
+    ]
+  },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
