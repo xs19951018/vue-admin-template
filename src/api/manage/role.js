@@ -31,3 +31,26 @@ export function delRole(data) {
     data
   })
 }
+
+export function getAllRoleList() {
+  return request({
+    url: '/auth/getAllRoleList',
+    method: 'post'
+  })
+}
+
+export function getRoleIdsByUser(data) {
+  return request({
+    url: '/auth/getRoleIdsByUser',
+    method: 'post',
+    data
+  })
+}
+
+export function updateUserRoleRelation(data) {
+  return request({
+    url: '/auth/updateUserRoleRelation',
+    method: 'post',
+    data
+  })
+}

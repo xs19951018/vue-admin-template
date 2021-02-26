@@ -70,7 +70,7 @@ export default {
     // add or edit
     this.isEdit = Boolean(this.$route.query.id);
     if (this.isEdit) {
-      this.userForm = this.$route.query;
+      this.userForm = this.$route.query
     }
   },
   methods: {
@@ -93,19 +93,19 @@ export default {
               this.$message({
                 type: 'success',
                 message: '新增成功'
-              });
+              })
             }).catch(err => {})
           }
-          this.loading = false;
+          this.loading = false
         }
-      });
+      })
     },
     cancel() {
-      this.$router.push({ path: '/manage/userTable' });
+      this.$router.push({ path: '/manage/userTable' })
     },
     uploadSuccess(response, file, fileList) {
       // 上传头像成功回调
-      this.userForm.avatar = response.data + "?date="+new Date();
+      this.userForm.avatar = response.data
     }
   }
 }

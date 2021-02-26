@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getResourceList(data) {
+export function getResourcePage(data) {
   return request({
-    url: '/auth/getResourceList',
+    url: '/auth/getResourcePage',
     method: 'post',
     data
   })
@@ -27,6 +27,22 @@ export function updateResource(data) {
 export function delResource(data) {
   return request({
     url: '/auth/delResource',
+    method: 'post',
+    data
+  })
+}
+
+export function getRoleResourceList(data) {
+  return request({
+    url: '/auth/getRoleResourceList',
+    method: 'post',
+    data
+  })
+}
+
+export function updateRoleResourceRelation(data) {
+  return request({
+    url: '/auth/updateRoleResourceRelation',
     method: 'post',
     data
   })

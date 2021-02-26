@@ -184,6 +184,20 @@ export const constantRoutes = [
         meta: { title: '新增角色' }
       },
       {
+        path: 'roleTable/editMenu',
+        name: 'editMenu',
+        hidden: true,
+        component: () => import('@/views/backEnd/manage/role/editMenu'),
+        meta: { title: '分配菜单' }
+      },
+      {
+        path: 'roleTable/editResource',
+        name: 'editResource',
+        hidden: true,
+        component: () => import('@/views/backEnd/manage/role/editResource'),
+        meta: { title: '分配资源' }
+      },
+      {
         path: 'menuTable',
         name: 'menuTable',
         component: () => import('@/views/backEnd/manage/menu/index'),
@@ -208,6 +222,20 @@ export const constantRoutes = [
         hidden: true,
         component: () => import('@/views/backEnd/manage/resource/addResource'),
         meta: { title: '新增资源' }
+      },
+      {
+        path: 'resourceCategoryTable',
+        name: 'resourceCategoryTable',
+        hidden: true,
+        component: () => import('@/views/backEnd/manage/resourceCategory/index'),
+        meta: { title: '资源分类列表', icon: 'table' }
+      },
+      {
+        path: 'resourceCategoryTable/addResourceCategory',
+        name: 'addResourceCategory',
+        hidden: true,
+        component: () => import('@/views/backEnd/manage/resourceCategory/addResourceCategory'),
+        meta: { title: '新增资源分类' }
       }
     ]
   },

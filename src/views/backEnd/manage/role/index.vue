@@ -30,6 +30,8 @@
         <template slot-scope="scope">
           <el-button type="text" @click="edit(scope.row)" size="small">编辑</el-button>
           <el-button type="text" @click="delRole(scope.row.id)" size="small">删除</el-button>
+          <el-button type="text" @click="editMenu(scope.row)" size="small">分配菜单</el-button>
+          <el-button type="text" @click="editResource(scope.row)" size="small">分配资源</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -97,6 +99,12 @@ export default {
           });
         })
       }).catch(err => {});
+    },
+    editMenu(data) {
+      this.$router.push({ path: '/manage/roleTable/editMenu', query: data });
+    },
+    editResource(data) {
+      this.$router.push({ path: '/manage/roleTable/editResource', query: data });
     }
   }
 }

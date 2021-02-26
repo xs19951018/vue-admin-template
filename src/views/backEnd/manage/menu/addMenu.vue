@@ -5,8 +5,18 @@
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="menuForm.name" size="small"></el-input>
         </el-form-item>
+        <el-form-item label="英文名称" prop="code">
+          <el-input v-model="menuForm.code" size="small"></el-input>
+        </el-form-item>
         <el-form-item label="父级菜单" prop="parentId">
-          <el-input v-model="menuForm.parentId" size="small"></el-input>
+          <el-select v-model="menuForm.parentId" clearable placeholder="请选择" size="small">
+            <el-option
+              v-for="item in topMenuOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-form-item>
         
         <div class="tools">
@@ -19,7 +29,7 @@
 </template>
 
 <script>
-import { addMenu, updateMenu } from '@/api/manage/menu'
+import { addMenu, updateMenu, getTopMenuList } from '@/api/manage/menu'
 
 export default {
   data() {
@@ -28,14 +38,15 @@ export default {
       isEdit: false,
       menuForm: {
         id: null,
-        userName: null,
-        password: '88888888',
         name: null,
-        phone: null
+        parentId: null,
+        code: null
       },
+      topMenuOptions: [{ id: 0, name: "无", value: 0 }],
       menuRules: {
-        userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        name: [{ required: true, message: '请输入姓名', trigger: 'blur' }]
+        name: [{ required: true, message: '请输入菜单名称', trigger: 'blur' }],
+        code: [{ required: true, message: '请输入英文名称', trigger: 'blur' }],
+        parentId: [{ required: true, message: '请选择父级菜单', trigger: 'change' }]
       }
     }
   },
@@ -47,6 +58,8 @@ export default {
     if (this.isEdit) {
       this.menuForm = this.$route.query;
     }
+    // 初始化菜单select
+    this.getTopMenuList();
   },
   methods: {
     handleSave() {
@@ -77,6 +90,11 @@ export default {
     },
     cancel() {
       this.$router.push({ path: '/manage/menuTable' });
+    },
+    getTopMenuList() {
+      getTopMenuList().then(res => {
+        this.topMenuOptions = this.topMenuOptions.concat(res.data)
+      }).catch(err => {})
     }
   }
 }

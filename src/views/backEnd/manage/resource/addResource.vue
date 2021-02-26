@@ -11,6 +11,16 @@
         <el-form-item label="请求路径" prop="url">
           <el-input v-model="resourceForm.url" size="small"></el-input>
         </el-form-item>
+        <el-form-item label="资源分类" prop="categoryId">
+          <el-select v-model="resourceForm.categoryId" clearable placeholder="请选择" size="small">
+            <el-option
+              v-for="item in categoryOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
         
         <div class="tools">
           <el-button type="primary" @click="handleSave" size="small">保存</el-button>
@@ -23,6 +33,7 @@
 
 <script>
 import { addResource, updateResource } from '@/api/manage/resource'
+import { getResourceCategoryList } from '@/api/manage/resourceCategory'
 
 export default {
   data() {
@@ -33,12 +44,15 @@ export default {
         id: null,
         name: null,
         code: null,
-        url: null
+        url: null,
+        categoryId: null
       },
+      categoryOptions: [],
       resourceRules: {
         name: [{ required: true, message: '请输入资源名称', trigger: 'blur' }],
         code: [{ required: true, message: '请输入资源编码', trigger: 'blur' }],
-        url: [{ required: true, message: '请输入请求路径', trigger: 'blur' }]
+        url: [{ required: true, message: '请输入请求路径', trigger: 'blur' }],
+        categoryId: [{ required: true, message: '请选择资源分类', trigger: 'change' }]
       }
     }
   },
@@ -50,6 +64,8 @@ export default {
     if (this.isEdit) {
       this.resourceForm = this.$route.query;
     }
+    // 初始化资源分类select
+    this.getResourceCategoryList();
   },
   methods: {
     handleSave() {
@@ -80,6 +96,11 @@ export default {
     },
     cancel() {
       this.$router.push({ path: '/manage/resourceTable' });
+    },
+    getResourceCategoryList() {
+      getResourceCategoryList({}).then(res => {
+        this.categoryOptions = res.data;
+      }).catch(err => {})
     }
   }
 }

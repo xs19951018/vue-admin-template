@@ -30,6 +30,7 @@
     >
       <el-table-column prop="userName" align="center" label="用户名"></el-table-column>
       <el-table-column prop="name" align="center" label="姓名"></el-table-column>
+      <el-table-column prop="roleName" align="center" label="角色"></el-table-column>
       <el-table-column prop="phone" align="center" label="手机号"></el-table-column>
       <el-table-column prop="createTime" align="center" label="创建时间">
         <template slot-scope="scope">
@@ -44,6 +45,7 @@
       </el-table-column>
       <el-table-column align="center" label="操作">
         <template slot-scope="scope">
+          <el-button type="text" @click="editRole(scope.row.id)" size="small">分配角色</el-button>
           <el-button type="text" @click="edit(scope.row)" size="small">编辑</el-button>
           <el-button type="text" @click="delUser(scope.row.id)" size="small">删除</el-button>
         </template>
@@ -52,26 +54,37 @@
 
     <pagination :total="total" :page.sync="queryWhere.pageNum" :limit.sync="queryWhere.pageSize" 
       @pagination="fetchData()"/>
+
+    <el-dialog title="分配角色" custom-class="role-dialog" :visible.sync="roleForm.dialogVisible" width="30%">
+      <el-form :form="roleForm">
+        <el-form-item>
+          <el-select v-model="roleForm.roleIds" multiple size="small" placeholder="请选择">
+            <el-option
+              v-for="item in roleForm.roleOptions"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="roleForm.dialogVisible = false" size="small">取 消</el-button>
+        <el-button type="primary" @click="updateUserRoleRelation()" size="small">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getUserList, changeUserStatus, delUser } from '@/api/manage/user'
+import { getAllRoleList, getRoleIdsByUser, updateUserRoleRelation } from '@/api/manage/role'
 import Pagination from '@/components/Pagination'
 
 export default {
   components: {
     Pagination
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
   },
   data() {
     return {
@@ -87,7 +100,13 @@ export default {
       statusOptions: [
         { value: 1, label: '启用' },
         { value: 0, label: '禁用' }
-      ]
+      ],
+      roleForm: {
+        dialogVisible: false,
+        roleOptions: [],
+        userId: null,
+        roleIds: [],
+      }
     }
   },
   created() {
@@ -146,11 +165,45 @@ export default {
           });
         })
       }).catch(err => {});
+    },
+    editRole(id) {
+      this.roleForm.dialogVisible = true;
+      this.roleForm.userId = id;
+      if (this.roleForm.roleOptions.length === 0) {
+        this.getAllRoleList();
+      }
+      this.getRoleIdsByUser();
+    },
+    getAllRoleList() {
+      getAllRoleList().then(res => {
+        this.roleForm.roleOptions = res.data;
+      }).catch(err => {})
+    },
+    getRoleIdsByUser() {
+      getRoleIdsByUser({ id: this.roleForm.userId }).then(res => {
+        this.roleForm.roleIds = res.data;
+      }).catch(err => {})
+    },
+    updateUserRoleRelation() {
+      updateUserRoleRelation(this.roleForm).then(res => {
+        this.fetchData();
+        this.$message({
+          type: 'success',
+          message: '角色修改成功'
+        });
+      }).catch(err => {})
+      this.roleForm.dialogVisible = false;
     }
   }
 }
 </script>
 <style lang="scss" scpoed>
-  @import "@/styles/common"
+  @import "@/styles/common";
 
+  .el-dialog__header, .el-dialog__footer {
+    padding: 10px 20px;
+  }
+  .el-dialog__body {
+    padding: 0 20px;
+  }
 </style>
