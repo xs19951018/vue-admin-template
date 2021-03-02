@@ -158,6 +158,7 @@ export default {
     padding: 5px 0;
   }
   .item .el-switch {
-    margin-left: 12rem;
+    float: right;
+    margin-right: 12rem;
   }
 </style>
